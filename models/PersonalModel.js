@@ -18,4 +18,6 @@ const PersonalModel = db.define('personal_escolar', {
     updatedAt: false,
 })
 
+PersonalModel.removeAttribute('id')
+
 export default PersonalModel;

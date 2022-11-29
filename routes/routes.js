@@ -7,6 +7,8 @@ import { createMateria, deleteMateria, getAllMaterias, getMateria, updateMateria
 import { createPersonal, deletePersonal, getAllPersonal, getPersonal, getPersonalNotAdmin, updatePersonal } from '../controllers/PersonalController.js';
 import AdministradorModel from '../models/AdministradorModel.js';
 import jwt from "jsonwebtoken";
+import { createPuesto, deletePuesto, getAllPuestos, getPuesto, updatePuesto } from '../controllers/PuestosController.js';
+import { getAllPuestosPersonal } from '../controllers/PuestosPersonalController.js';
 
 const router = express.Router()
 
@@ -71,5 +73,15 @@ router.get('/carreras/:id', getCarrera)
 router.post('/carreras/', createCarrera)
 router.put('/carreras/:id', updateCarrera)
 router.delete('/carreras/:id', deleteCarrera)
+
+/* - PUESTOS - */
+router.get('/puestos/', getAllPuestos)
+router.get('/puestos/:id', getPuesto)
+router.post('/puestos/', createPuesto)
+router.put('/puestos/:id', updatePuesto)
+router.delete('/puestos/:id', deletePuesto)
+
+/* - PUESTOS PERSONAL - */
+router.get('/puestos_personal/', getAllPuestosPersonal)
 
 export default router;

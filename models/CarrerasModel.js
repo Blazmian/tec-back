@@ -10,4 +10,6 @@ const CarrerasModel = db.define('carreras', {
     updatedAt: false,
 })
 
+CarrerasModel.removeAttribute('id')
+
 export default CarrerasModel;

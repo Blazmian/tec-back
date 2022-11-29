@@ -19,4 +19,6 @@ const AlumnosModel = db.define('alumnos', {
     updatedAt: false,
 })
 
+AlumnosModel.removeAttribute('id')
+
 export default AlumnosModel;

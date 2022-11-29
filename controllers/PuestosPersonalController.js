@@ -1,18 +1,16 @@
-import AdministradorModel from "../models/AdministradorModel.js";
+import PuestosPersonalModel from "../models/PuestosPersonalModel.js";
 import PersonalModel from "../models/PersonalModel.js";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
-dotenv.config()
+import PuestosModel from "../models/PuestosModel.js";
 
-PersonalModel.hasMany(AdministradorModel, {foreignKey: "id_personal", sourceKey: "id_personal", foreigntKeyConstraint: true});
+PersonalModel.hasMany(PuestosPersonalModel, {foreignKey: "id_personal", sourceKey: "id_personal", foreigntKeyConstraint: true});
+PuestosModel.hasMany(PuestosPersonalModel, {foreignKey: "id_puesto", sourceKey: "id_puesto", foreigntKeyConstraint: true});
 
-export const getAllAdministradores = async (req, res) => {
+export const getAllPuestosPersonal = async (req, res) => {
     try {
-        const administradores = await AdministradorModel.findAll({
-            include: PersonalModel
+        const puestos_personal = await PuestosPersonalModel.findAll({
+            include: PersonalModel, PuestosModel
         });
-        res.json(administradores)
+        res.json(puestos_personal)
     } catch (error) {
         res.json({ message: error.message })
     }

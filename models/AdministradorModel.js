@@ -1,5 +1,6 @@
 import db from '../database/db.js';
 import { DataTypes } from 'sequelize';
+import PersonalModel from './PersonalModel.js';
 
 const AdministradorModel = db.define('administradores', {
     usuario: { type: DataTypes.STRING },
@@ -16,5 +17,6 @@ const AdministradorModel = db.define('administradores', {
 })
 
 AdministradorModel.removeAttribute('id')
+AdministradorModel.belongsTo(PersonalModel, {foreignKey: 'id_personal'})
 
 export default AdministradorModel;

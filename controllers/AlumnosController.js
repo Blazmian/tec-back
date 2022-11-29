@@ -23,7 +23,7 @@ export const getAlumno = async (req, res) => {
 export const createAlumno = async (req, res) => {
     try {
         await AlumnosModel.create(req.body)
-        res.json({
+        res.status(200).json({
             "message":"¡Alumno creado correctamente!"
         })
     } catch (error) {

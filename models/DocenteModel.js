@@ -1,5 +1,6 @@
 import db from '../database/db.js';
 import { DataTypes } from 'sequelize';
+import PersonalModel from './PersonalModel.js';
 
 const DocentesModel = db.define('docentes', {
     no_control_docente: { type: DataTypes.INTEGER, primaryKey: true },
@@ -10,5 +11,8 @@ const DocentesModel = db.define('docentes', {
     createdAt: false,   
     updatedAt: false,
 })
+
+DocentesModel.removeAttribute('id')
+DocentesModel.belongsTo(PersonalModel, {foreignKey: 'id_personal'})
 
 export default DocentesModel;

@@ -10,4 +10,6 @@ const MateriasModel = db.define('materias', {
     updatedAt: false,
 })
 
+MateriasModel.removeAttribute('id')
+
 export default MateriasModel;

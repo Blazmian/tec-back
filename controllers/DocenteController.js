@@ -2,7 +2,7 @@ import DocentesModel from '../models/DocenteModel.js';
 
 export const getAllDocentes = async (req, res) => {
     try {
-        const docentes = await DocenteModels.findAll();
+        const docentes = await DocentesModel.findAll();
         res.json(docentes)
     } catch (error) {
         res.json({ message: error.message })
@@ -11,7 +11,7 @@ export const getAllDocentes = async (req, res) => {
 
 export const getDocente = async (req, res) => {
     try {
-        const docente = await DocenteModels.findAll({
+        const docente = await DocentesModel.findAll({
             where: { no_control_docente: req.params.id }
         })
         res.json(persona[0])
