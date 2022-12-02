@@ -31,6 +31,15 @@ export const getPersonalNotAdmin = async (req, res) => {
     }
 }
 
+export const getPersonalNotDocente = async (req, res) => {
+    try {
+        const personal = await db.query("SELECT * FROM personal_escolar WHERE id_personal NOT IN (SELECT id_personal FROM docente);")
+        res.json(personal[0])
+    } catch (error) {
+        res.json({message: error.message})
+    }
+}
+
 export const createPersonal = async (req, res) => {
     try {
         await PersonalModel.create(req.body)

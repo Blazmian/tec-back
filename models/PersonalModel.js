@@ -9,7 +9,6 @@ const PersonalModel = db.define('personal_escolar', {
     correo: { type: DataTypes.STRING },
     telefono: { type: DataTypes.STRING },
     genero: { type: DataTypes.STRING },
-    contrasena: { type: DataTypes.STRING },
     domicilio: { type: DataTypes.STRING },
     fecha_nacimiento: { type: DataTypes.DATE },
 }, {

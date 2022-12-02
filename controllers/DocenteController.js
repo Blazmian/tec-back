@@ -1,8 +1,13 @@
 import DocentesModel from '../models/DocenteModel.js';
+import PersonalModel from '../models/PersonalModel.js';
+
+PersonalModel.hasMany(DocentesModel, {foreignKey: "id_personal", sourceKey: "id_personal", foreigntKeyConstraint: true});
 
 export const getAllDocentes = async (req, res) => {
     try {
-        const docentes = await DocentesModel.findAll();
+        const docentes = await DocentesModel.findAll({
+            include: PersonalModel
+        });
         res.json(docentes)
     } catch (error) {
         res.json({ message: error.message })
@@ -25,19 +30,6 @@ export const createDocente = async (req, res) => {
         await DocentesModel.create(req.body)
         res.json({
             "message":"¡Docente generado correctamente!"
-        })
-    } catch (error) {
-        res.json({ message: error.message })
-    }
-}
-
-export const updateDocente = async (req, res) => {
-    try {
-        await DocentesModel.update(req.body, {
-            where: { no_control_docente: req.params.id }
-        })
-        res.json({
-            "message":"¡Docente actualizado correctamente!"
         })
     } catch (error) {
         res.json({ message: error.message })

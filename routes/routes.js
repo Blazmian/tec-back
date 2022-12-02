@@ -1,14 +1,14 @@
 import express from 'express';
-import { adminAuthenticate, createAdministrador, deleteAdministrador, getAdministrador, getAllAdministradores, loginAdministrador, updatePassAdministrador } from '../controllers/AdministradorController.js';
+import { createAdministrador, deleteAdministrador, getAdministrador, getAllAdministradores, loginAdministrador } from '../controllers/AdministradorController.js';
 import { createAlumno, deleteAlumno, getAllAlumnos, getAlumno, updateAlumno } from '../controllers/AlumnosController.js';
 import { createCarrera, deleteCarrera, getAllCarreras, getCarrera, updateCarrera } from '../controllers/CarrerasController.js';
-import { createDocente, deleteDocente, getAllDocentes, getDocente, updateDocente } from '../controllers/DocenteController.js';
+import { createDocente, deleteDocente, getAllDocentes, getDocente } from '../controllers/DocenteController.js';
 import { createMateria, deleteMateria, getAllMaterias, getMateria, updateMateria } from '../controllers/MateriasController.js';
-import { createPersonal, deletePersonal, getAllPersonal, getPersonal, getPersonalNotAdmin, updatePersonal } from '../controllers/PersonalController.js';
+import { createPersonal, deletePersonal, getAllPersonal, getPersonal, getPersonalNotAdmin, getPersonalNotDocente, updatePersonal } from '../controllers/PersonalController.js';
 import AdministradorModel from '../models/AdministradorModel.js';
 import jwt from "jsonwebtoken";
 import { createPuesto, deletePuesto, getAllPuestos, getPuesto, updatePuesto } from '../controllers/PuestosController.js';
-import { getAllPuestosPersonal } from '../controllers/PuestosPersonalController.js';
+import { getPuestosPersonal } from '../controllers/PuestosPersonalController.js';
 
 const router = express.Router()
 
@@ -16,6 +16,7 @@ const router = express.Router()
 router.get('/personal_escolar/', getAllPersonal)
 router.get('/personal_escolar/:id', getPersonal)
 router.get('/personalNotAdmin/', getPersonalNotAdmin)
+router.get('/personalNotDocente/', getPersonalNotDocente)
 router.post('/personal_escolar/', createPersonal)
 router.put('/personal_escolar/:id', updatePersonal)
 router.delete('/personal_escolar/:id', deletePersonal)
@@ -43,14 +44,12 @@ async (req, res, next) => {
     res.json(user)
 })
 router.post('/administradores/', createAdministrador)
-router.put('/administradores/:id', updatePassAdministrador)
 router.delete('/administradores/:id', deleteAdministrador)
 
 /* - DOCENTES - */
 router.get('/docentes/', getAllDocentes)
 router.get('/docentes/:id', getDocente)
 router.post('/docentes/', createDocente)
-router.put('/docentes/:id', updateDocente)
 router.delete('/docentes/:id', deleteDocente)
 
 /* - ALUMNOS - */
@@ -82,6 +81,6 @@ router.put('/puestos/:id', updatePuesto)
 router.delete('/puestos/:id', deletePuesto)
 
 /* - PUESTOS PERSONAL - */
-router.get('/puestos_personal/', getAllPuestosPersonal)
+router.get('/puestos_personal/:id', getPuestosPersonal)
 
 export default router;

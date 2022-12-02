@@ -78,23 +78,10 @@ export const createAdministrador = async (req, res) => {
     }
 }
 
-export const updatePassAdministrador = async (req, res) => {
-    try {
-        await AdministradorModel.update(req.body, {
-            where: { usuario: req.params.id }
-        })
-        res.json({
-            "message":"¡Contraseña actualizada correctamente!"
-        })
-    } catch (error) {
-        res.json({ message: error.message })
-    }
-}
-
 export const deleteAdministrador = async (req, res) => {
     try {
         await AdministradorModel.destroy({
-            where: { id_personal: req.params.id }
+            where: { usuario: req.params.id }
         })
         res.json({
             "message":"¡Administrador eliminado correctamente!"
