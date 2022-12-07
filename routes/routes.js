@@ -9,6 +9,8 @@ import AdministradorModel from '../models/AdministradorModel.js';
 import jwt from "jsonwebtoken";
 import { createPuesto, deletePuesto, getAllPuestos, getPuesto, updatePuesto } from '../controllers/PuestosController.js';
 import { getPuestosPersonal } from '../controllers/PuestosPersonalController.js';
+import { createGrupo, deleteGrupo, getAllGrupos, getGrupo } from '../controllers/GruposController.js';
+import { createClase, deleteClase, getAllClases } from '../controllers/ClasesController.js';
 
 const router = express.Router()
 
@@ -79,6 +81,17 @@ router.get('/puestos/:id', getPuesto)
 router.post('/puestos/', createPuesto)
 router.put('/puestos/:id', updatePuesto)
 router.delete('/puestos/:id', deletePuesto)
+
+/* - GRUPOS - */
+router.get('/grupos/', getAllGrupos)
+router.get('/grupos/:id', getGrupo)
+router.post('/grupos/', createGrupo)
+router.delete('/grupos/:id', deleteGrupo)
+
+/* - CLASES - */
+router.get('/clases/', getAllClases)
+router.post('/clases/', createClase)
+router.delete('/clases/:id', deleteClase)
 
 /* - PUESTOS PERSONAL - */
 router.get('/puestos_personal/:id', getPuestosPersonal)
