@@ -2,7 +2,7 @@ import express from 'express';
 import { createAdministrador, deleteAdministrador, getAdministrador, getAllAdministradores, loginAdministrador } from '../controllers/AdministradorController.js';
 import { createAlumno, deleteAlumno, getAllAlumnos, getAlumno, updateAlumno } from '../controllers/AlumnosController.js';
 import { createCarrera, deleteCarrera, getAllCarreras, getCarrera, updateCarrera } from '../controllers/CarrerasController.js';
-import { createDocente, deleteDocente, getAllDocentes, getDocente } from '../controllers/DocenteController.js';
+import { createDocente, deleteDocente, getAllDocentes, getDocente, loginDocente } from '../controllers/DocenteController.js';
 import { createMateria, deleteMateria, getAllMaterias, getMateria, updateMateria } from '../controllers/MateriasController.js';
 import { createPersonal, deletePersonal, getAllPersonal, getPersonal, getPersonalNotAdmin, getPersonalNotDocente, updatePersonal } from '../controllers/PersonalController.js';
 import AdministradorModel from '../models/AdministradorModel.js';
@@ -10,7 +10,8 @@ import jwt from "jsonwebtoken";
 import { createPuesto, deletePuesto, getAllPuestos, getPuesto, updatePuesto } from '../controllers/PuestosController.js';
 import { getPuestosPersonal } from '../controllers/PuestosPersonalController.js';
 import { createGrupo, deleteGrupo, getAllGrupos, getGrupo } from '../controllers/GruposController.js';
-import { createClase, deleteClase, getAllClases } from '../controllers/ClasesController.js';
+import { createClase, deleteClase, getAllClases, getClasesByDocente, getInfoDocente } from '../controllers/ClasesController.js';
+import DocentesModel from '../models/DocenteModel.js';
 
 const router = express.Router()
 
@@ -26,8 +27,8 @@ router.delete('/personal_escolar/:id', deletePersonal)
 /* - ADMINISTRADORES - */
 router.get('/administradores/', getAllAdministradores)
 router.get('/administradores/:id', getAdministrador)
-router.post('/login/', loginAdministrador)
-router.post('/auth', 
+router.post('/loginAdmin/', loginAdministrador)
+router.post('/authAdmin', 
 async (req, res, next) => {
     try {
         let decoded = jwt.verify(req.body.token, process.env.SECRET)
@@ -36,7 +37,7 @@ async (req, res, next) => {
     } catch(error) {
         res.status(401).json({ 'Error': 'No se pudo autentificar'})
     }
-    }, 
+    },
     async (req, res) => {
     let user = await AdministradorModel.findOne({ where: {usuario: req.body.usuario}, attributes: {exclude: ["pass"]}})
     if (user === null) {
@@ -50,6 +51,25 @@ router.delete('/administradores/:id', deleteAdministrador)
 
 /* - DOCENTES - */
 router.get('/docentes/', getAllDocentes)
+router.post('/loginDocente/', loginDocente)
+router.post('/authDocente', 
+async (req, res, next) => {
+    try {
+        let decoded = jwt.verify(req.body.token, process.env.SECRET)
+        req.body = decoded
+        next();
+    } catch(error) {
+        res.status(401).json({ 'Error': 'No se pudo autentificar'})
+    }
+    }, 
+    async (req, res) => {
+    let user = await DocentesModel.findOne({ where: {no_control_docente: req.body.No_Control}, attributes: {exclude: ["nip"]}})
+    if (user === null) {
+        res.status(404).json({'msg': 'Usuario no encontrado'})
+    }
+    console.log("USUARIO ENCONTRADO")
+    res.json(user)
+})
 router.get('/docentes/:id', getDocente)
 router.post('/docentes/', createDocente)
 router.delete('/docentes/:id', deleteDocente)
@@ -90,6 +110,8 @@ router.delete('/grupos/:id', deleteGrupo)
 
 /* - CLASES - */
 router.get('/clases/', getAllClases)
+router.get('/clases/:id', getClasesByDocente)
+router.get('/clases/infoDocente/:id', getInfoDocente)
 router.post('/clases/', createClase)
 router.delete('/clases/:id', deleteClase)
 
