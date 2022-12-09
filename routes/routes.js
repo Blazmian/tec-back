@@ -35,7 +35,7 @@ async (req, res, next) => {
         req.body = decoded
         next();
     } catch(error) {
-        res.status(401).json({ 'Error': 'No se pudo autentificar'})
+        res.status(205).json({ 'Error': 'No se pudo autentificar'})
     }
     },
     async (req, res) => {
@@ -59,7 +59,7 @@ async (req, res, next) => {
         req.body = decoded
         next();
     } catch(error) {
-        res.status(401).json({ 'Error': 'No se pudo autentificar'})
+        res.status(205).json({ 'Error': 'No se pudo autentificar'})
     }
     }, 
     async (req, res) => {
